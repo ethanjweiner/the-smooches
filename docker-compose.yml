@@ -1,0 +1,4 @@
+# Production specifications
+# Move some config from dev -> prod
+
+version: '3.8'

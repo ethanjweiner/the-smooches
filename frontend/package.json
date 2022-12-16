@@ -2,6 +2,7 @@
   "name": "smooches",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://backend:8080",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -18,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && mv ./build ../backend/build/frontend",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
