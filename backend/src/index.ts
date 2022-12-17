@@ -9,8 +9,8 @@ const app = express();
 //   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 // });
 
-app.get('/api/test', (_, res) => {
-  res.send('some text!');
+app.get('/api/get', (_, res) => {
+  res.send('Send some text back!');
 });
 
 const port = 8080;

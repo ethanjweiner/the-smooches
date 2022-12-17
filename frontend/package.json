@@ -19,9 +19,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && mv ./build ../backend/build/frontend",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-container": "docker build -t smooches-frontend-prod:latest --target prod .",
+    "build-all": "npm run build && npm run build-container"
   },
   "eslintConfig": {
     "extends": [

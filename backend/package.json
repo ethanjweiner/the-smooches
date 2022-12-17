@@ -8,6 +8,8 @@
     "dev": "ts-node-dev ./src/index.ts",
     "start": "node build/index.js",
     "build": "npx tsc",
+    "build-container": "docker build -t smooches-backend-prod:latest --target prod .",
+    "build-all": "npm run build && npm run build-container",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
