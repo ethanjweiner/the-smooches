@@ -1,0 +1,1 @@
+export const SLIDESHOW_INTERVAL = 5000;
