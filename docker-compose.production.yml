@@ -12,7 +12,7 @@ services:
     image: smooches-frontend-prod:latest
     environment:
       - NODE_ENV=production
-      - PORT=80
+      - PORT=3000
     ports:
       # switch to 80:80 mapping for production
       - '3000:80'
