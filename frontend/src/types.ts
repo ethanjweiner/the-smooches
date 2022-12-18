@@ -17,3 +17,9 @@ export class Queue<T> {
     return this.#items.length === 0;
   }
 }
+
+export interface Image {
+  src: string;
+  bucket: string;
+  caption?: string;
+}

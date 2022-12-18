@@ -1,7 +1,7 @@
 // Utility functions for retrieving images from buckets
 import axios from 'axios';
 
-import { Image } from '@backend/types';
+import { Image } from '../types';
 
 const fetchImages = async (
   bucket: string,
@@ -15,7 +15,7 @@ const fetchImages = async (
   const response = await axios.get(endpoint);
 
   // No need to validate, type is shared from backend
-  const images: Image[] = response.data.images;
+  const images: Image[] = response.data;
   return images;
 };
 

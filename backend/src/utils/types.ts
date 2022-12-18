@@ -1,4 +1,5 @@
 export interface Image {
   src: string;
-  caption: string;
+  bucket: string;
+  caption?: string;
 }

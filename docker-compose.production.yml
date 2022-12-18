@@ -1,6 +1,5 @@
 services:
   backend:
-    # switch to public ECR image
     image: smooches-backend-prod:latest 
     environment:
       - NODE_ENV=production

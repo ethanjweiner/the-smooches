@@ -1,4 +1,4 @@
-import { Image } from '@backend/types';
+import { Image } from './types';
 import { useEffect, useState } from 'react';
 import { SLIDESHOW_INTERVAL } from './constants';
 import { fetchImages } from './services/buckets';
@@ -11,7 +11,7 @@ export function useImage(): Image | null {
 
   const refreshImages = async () => {
     if (images.isEmpty()) {
-      const data = await fetchImages('both', 5);
+      const data = await fetchImages('Bentley', 5);
       images.enqueue(...data);
     }
 

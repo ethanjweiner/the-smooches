@@ -18,7 +18,9 @@ function Slideshow() {
 
   return (
     <>
-      <Card.Footer style={captionStyle}>{image.caption}</Card.Footer>
+      {image.caption && (
+        <Card.Footer style={captionStyle}>{image.caption}</Card.Footer>
+      )}
       <Card.Img variant="bottom" src={image.src} style={imageBorder} />
     </>
   );
