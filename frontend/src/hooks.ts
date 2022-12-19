@@ -11,6 +11,7 @@ export function useImage(): Image | null {
 
   const refreshImages = async () => {
     if (images.isEmpty()) {
+      // Retrieve currently selected bucket here
       const data = await fetchImages('Bentley', 5);
       images.enqueue(...data);
     }

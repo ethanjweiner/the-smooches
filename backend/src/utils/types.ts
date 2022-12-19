@@ -1,5 +1,11 @@
+export enum Bucket {
+  lady = 'lady',
+  bentley = 'bentley',
+  both = 'lady+bentley',
+}
+
 export interface Image {
   src: string;
-  bucket: string;
+  bucket: Bucket;
   caption?: string;
 }

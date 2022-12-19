@@ -18,8 +18,18 @@ export class Queue<T> {
   }
 }
 
+export enum Bucket {
+  lady = 'lady',
+  bentley = 'bentley',
+  both = 'both',
+}
+
 export interface Image {
   src: string;
-  bucket: string;
+  bucket: Bucket;
   caption?: string;
+}
+
+export enum Action {
+  SET = 'SET',
 }

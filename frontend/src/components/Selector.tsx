@@ -1,22 +1,26 @@
 import Nav from 'react-bootstrap/Nav';
+import { useSelectedBucket } from '../store/store';
+import { Bucket } from '../types';
+import { capitalize } from '../utils/helpers';
 
 function PillsExample() {
+  const buckets = Object.values(Bucket);
+
+  const { bucket: selectedBucket, setBucket } = useSelectedBucket();
+
   return (
     <Nav
       className="justify-content-center flex-column flex-md-row"
       variant="pills"
-      defaultActiveKey="lady-bentley"
+      defaultActiveKey={selectedBucket}
     >
-      <Nav.Item>
-        <Nav.Link eventKey="lady">Lady</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey="bentley">Bentley</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey="lady-bentley">Both</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>{/* Add button here for adding more */}</Nav.Item>
+      {buckets.map((bucket) => (
+        <Nav.Item key={bucket}>
+          <Nav.Link eventKey={bucket} onClick={() => setBucket(bucket)}>
+            {capitalize(bucket)}
+          </Nav.Link>
+        </Nav.Item>
+      ))}
     </Nav>
   );
 }

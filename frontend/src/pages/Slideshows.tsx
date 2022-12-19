@@ -1,6 +1,7 @@
 import { Card, Container } from 'react-bootstrap';
 import Selector from '../components/Selector';
 import Slideshow from '../components/Slideshow';
+// import { SelectedBucketProvider } from '../store';
 
 function Slideshows() {
   const cardStyle = {
@@ -10,6 +11,7 @@ function Slideshows() {
   };
 
   return (
+    // <SelectedBucketProvider>
     <Container>
       <Card border="primary" className="mt-4 mx-auto" style={cardStyle}>
         <Card.Header>
@@ -18,6 +20,8 @@ function Slideshows() {
         <Slideshow />
       </Card>
     </Container>
+    //{' '}
+    // </SelectedBucketProvider>
   );
 }
 
