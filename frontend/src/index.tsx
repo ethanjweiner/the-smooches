@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import 'bootswatch/dist/journal/bootstrap.min.css';
 import './index.css';
 import App from './App';
+import SelectedBucketProvider from './store/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -10,6 +11,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App />
+    <SelectedBucketProvider>
+      <App />
+    </SelectedBucketProvider>
   </React.StrictMode>
 );
