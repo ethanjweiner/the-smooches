@@ -1,0 +1,25 @@
+services:
+  backend:
+    container_name: smooches-backend
+    image: ejweiner/smooches-backend:1.0
+    build:
+      context: './backend'
+      target: 'prod'
+    restart: always
+    env_file:
+      - ./backend/.env
+    ports:
+      - '8080:8080'
+  frontend:
+    container_name: smooches-frontend
+    build:
+      context: './frontend'
+      target: 'prod'
+    depends_on:
+      - backend
+    image: ejweiner/smooches-frontend:1.0
+    environment:
+      - PORT=3000
+    # ports:
+      # TODO: switch to 80:80 mapping for production
+      # - '3000:80'

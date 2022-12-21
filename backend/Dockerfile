@@ -1,13 +1,18 @@
 # base image (used in both dev & prod)
 FROM node:19-alpine as base
 
+WORKDIR /backend
+COPY . .
+RUN npm ci
+
 FROM base as prod
 
-WORKDIR /opt/node-app
-COPY package*.json ./
-RUN npm install
-COPY build ./build
-EXPOSE 8080
+ENV NODE_ENV production
+RUN npm run build
+RUN rm -r ./src
 CMD ["node", "build/index.js"]
 
 FROM base as dev
+
+ENV NODE_ENV development
+CMD ["npm", "run", "dev"]

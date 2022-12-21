@@ -1,11 +1,4 @@
 #!/bin/sh
 
-cd backend
-npm run build-all
-cd ..
-cd frontend
-npm run build-all
-cd ..
-
-# Tet build locally
-docker-compose -f docker-compose.production.yml up
+# TODO: Remove `--build` for production to avoid 
+docker compose -f docker-compose.production.yml up --build 

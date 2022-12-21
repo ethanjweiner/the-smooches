@@ -1,0 +1,19 @@
+services:
+  backend:
+    build:
+      context: './backend'
+      target: 'dev'
+    volumes:
+      - type: bind
+        source: ./backend
+        target: /backend
+  frontend:
+    build:
+      context: './frontend'
+      target: 'dev'
+    ports:
+      - '3000:3000'
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /frontend

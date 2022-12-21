@@ -7,10 +7,6 @@ const ImagesRouter = Router();
 ImagesRouter.get('/:bucket', async (req, res) => {
   const { bucket } = req.params;
 
-  const images = await ImageModel.find({
-    bucket,
-  });
-
   let count: number;
 
   if (typeof req.query.count == 'string') {
@@ -18,6 +14,11 @@ ImagesRouter.get('/:bucket', async (req, res) => {
   } else {
     count = DEFAULT_COUNT;
   }
+
+  // Limit to count
+  const images = await ImageModel.find({
+    bucket,
+  });
 
   count;
 
