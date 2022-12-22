@@ -1,5 +1,21 @@
 require('dotenv').config();
 
-const { PORT, MONGODB_URI, NODE_ENV, CLOUDFRONT_DIST_DOMAIN } = process.env;
+const {
+  PORT,
+  MONGODB_URI,
+  NODE_ENV,
+  CLOUDFRONT_DIST_DOMAIN,
+  ADMIN_USERNAME,
+  ADMIN_PASSWORD,
+  JWT_SECRET,
+} = process.env;
 
-export default { PORT, MONGODB_URI, NODE_ENV, CLOUDFRONT_DIST_DOMAIN };
+export default {
+  PORT,
+  MONGODB_URI,
+  NODE_ENV,
+  CLOUDFRONT_DIST_DOMAIN,
+  ADMIN_USERNAME,
+  ADMIN_PASSWORD,
+  JWT_SECRET,
+};

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { DEFAULT_BUCKET } from '../constants';
+import { DEFAULT_BUCKET } from '../utils/constants';
 import { Action, Bucket } from '../types';
 
 type BucketAction = SetBucketAction;

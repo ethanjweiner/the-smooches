@@ -1,0 +1,17 @@
+### Invalid login
+POST http://localhost:{{$dotenv PORT}}/api/login
+Content-Type: application/json
+
+{
+  "username": "ethan",
+  "password": "weiner"
+}
+
+### Valid login
+POST http://localhost:{{$dotenv PORT}}/api/login
+Content-Type: application/json
+
+{
+  "username": "{{$dotenv ADMIN_USERNAME}}",
+  "password": "{{$dotenv ADMIN_PASSWORD}}"
+}
