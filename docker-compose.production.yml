@@ -1,0 +1,8 @@
+services:
+  backend:
+    ports:
+      - '8080:8080'
+  frontend:
+    ports:
+      # TODO: switch to 80:80 mapping for production
+      - '3000:80'

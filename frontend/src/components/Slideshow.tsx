@@ -21,7 +21,12 @@ function Slideshow() {
       {image.caption && (
         <Card.Footer style={captionStyle}>{image.caption}</Card.Footer>
       )}
-      <Card.Img variant="bottom" src={image.src} style={imageBorder} />
+      <Card.Img
+        variant="bottom"
+        src={image.src}
+        alt="Oops! Unable to load image."
+        style={imageBorder}
+      />
     </>
   );
 }

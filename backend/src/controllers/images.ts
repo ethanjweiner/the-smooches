@@ -15,14 +15,10 @@ ImagesRouter.get('/:bucket', async (req, res) => {
     count = DEFAULT_COUNT;
   }
 
-  // Limit to count
   const images = await ImageModel.find({
     bucket,
   }).limit(count);
 
-  count;
-
-  // Retrieve `count` images from DB @ `bucket`
   return res.json(images);
 });
 

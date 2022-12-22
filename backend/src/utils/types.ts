@@ -1,7 +1,7 @@
 export enum Bucket {
   lady = 'lady',
   bentley = 'bentley',
-  both = 'lady+bentley',
+  both = 'both',
 }
 
 export interface Image {
