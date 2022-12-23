@@ -13,6 +13,7 @@ services:
     build:
       context: './frontend'
       target: 'prod'
+    restart: always
     depends_on:
       - backend
     image: ejweiner/smooches-frontend:1.0
