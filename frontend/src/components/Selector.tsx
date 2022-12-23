@@ -1,5 +1,5 @@
 import Nav from 'react-bootstrap/Nav';
-import { useSelectedBucket } from '../store/store';
+import { useSelectedBucket } from '../store/bucket';
 import { Bucket } from '../types';
 import { capitalize } from '../utils/helpers';
 

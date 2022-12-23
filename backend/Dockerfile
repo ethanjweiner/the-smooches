@@ -3,7 +3,8 @@ FROM node:19-alpine as base
 
 WORKDIR /backend
 COPY . .
-RUN npm ci
+RUN npm ci 
+# RUN npm install
 
 FROM base as prod
 
