@@ -32,4 +32,10 @@ export interface Image {
 
 export enum Action {
   SET = 'SET',
+  DELETE = 'DELETE',
+}
+
+export interface UserData {
+  username: string;
+  token: string;
 }

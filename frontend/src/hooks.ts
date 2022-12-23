@@ -1,9 +1,9 @@
 import { Image } from './types';
 import { useEffect, useState } from 'react';
-import { SLIDESHOW_INTERVAL } from './constants';
+import { SLIDESHOW_INTERVAL } from './utils/constants';
 import { fetchImages } from './services/buckets';
 import { Queue } from './types';
-import { useSelectedBucket } from './store/store';
+import { useSelectedBucket } from './store/bucket';
 
 // Provides an image state for
 export function useImage(): Image | null {

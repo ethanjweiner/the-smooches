@@ -1,4 +1,3 @@
-// Utility functions for retrieving images from buckets
 import axios from 'axios';
 
 import { Image } from '../types';

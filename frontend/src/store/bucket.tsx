@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { DEFAULT_BUCKET } from '../constants';
+import { DEFAULT_BUCKET } from '../utils/constants';
 import { Action, Bucket } from '../types';
 
 type BucketAction = SetBucketAction;
@@ -27,15 +27,22 @@ function reducer(state: State, action: BucketAction): State {
   }
 }
 
-const SelectedBucketContext = createContext({
-  bucket: DEFAULT_BUCKET,
-  setBucket: (_: Bucket) => {
-    _;
-    return;
-  },
-});
+interface SelectedBucketContextInterface extends State {
+  setBucket: (bucket: Bucket) => void;
+}
 
-export const useSelectedBucket = () => useContext(SelectedBucketContext);
+const SelectedBucketContext =
+  createContext<SelectedBucketContextInterface | null>(null);
+
+export const useSelectedBucket = () => {
+  const contextValue = useContext(SelectedBucketContext);
+
+  if (!contextValue) {
+    throw Error('Bucket context unavailable');
+  }
+
+  return contextValue;
+};
 
 function SelectedBucketProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
