@@ -11,17 +11,13 @@ export async function initDB() {
   }
 
   // Hardcoded image data present in S3 buckets as seed data
-  const imageBuckets: MapLike<string[]> = {
-    bentley: ['2', '3', '4', '5', '6', '7', '8', '9'],
-    lady: ['1', '2', '3'],
-    both: ['1'],
-  };
+  const imageBuckets: MapLike<string[]> = {};
   const images: Image[] = [];
 
   Object.keys(imageBuckets).forEach((bucketName) => {
     imageBuckets[bucketName].forEach((imageName) => {
       images.push({
-        src: `${config.CLOUDFRONT_DIST_DOMAIN}/${bucketName}/${imageName}.jpeg`,
+        name: imageName,
         bucket: bucketName as Bucket,
         caption: `Caption for image ${imageName}.jpeg`,
       });

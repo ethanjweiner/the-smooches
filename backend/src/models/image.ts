@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import { Image } from '../utils/types';
 
 const imageSchema = new Schema<Image>({
-  src: {
+  name: {
     type: String,
     required: true,
   },

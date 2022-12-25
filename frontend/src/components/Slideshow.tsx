@@ -1,5 +1,6 @@
 import { Card } from 'react-bootstrap';
 import { useImage } from '../hooks';
+import { imageNameToURL } from '../utils/helpers';
 
 function Slideshow() {
   const image = useImage();
@@ -23,7 +24,7 @@ function Slideshow() {
       )}
       <Card.Img
         variant="bottom"
-        src={image.src}
+        src={imageNameToURL(image.name, image.bucket)}
         alt="Oops! Unable to load image."
         style={imageBorder}
       />

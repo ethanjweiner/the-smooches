@@ -25,7 +25,7 @@ export enum Bucket {
 }
 
 export interface Image {
-  src: string;
+  name: string;
   bucket: Bucket;
   caption?: string;
 }
