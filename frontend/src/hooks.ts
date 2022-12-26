@@ -6,7 +6,10 @@ import { useSelectedBucket } from './store/bucket';
 import arrayShuffle from 'array-shuffle';
 
 // Provides an image state for
-export function useImage(interval: number): Image | null {
+export function useImage(
+  interval: number,
+  clickCounter?: number
+): Image | null {
   const [image, setImage] = useState<Image | null>(null);
   const { bucket } = useSelectedBucket();
 
@@ -19,8 +22,6 @@ export function useImage(interval: number): Image | null {
       images.enqueue(...arrayShuffle(data));
     }
 
-    console.log('Images after refresh', images, images.isEmpty());
-
     setImage(images.dequeue());
   }, [bucket]);
 
@@ -30,7 +31,7 @@ export function useImage(interval: number): Image | null {
     const intervalId = setInterval(refreshImages, interval);
 
     return () => clearInterval(intervalId);
-  }, [bucket, interval]);
+  }, [bucket, interval, clickCounter]);
 
   return image;
 }
