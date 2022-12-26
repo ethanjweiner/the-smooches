@@ -6,6 +6,7 @@
   "scripts": {
     "tsc": "tsc",
     "dev": "ts-node-dev ./src/index.ts",
+    "debug": "ts-node-dev ./src/index.ts --inspect",
     "start": "node build/index.js",
     "build": "npx tsc",
     "build-container": "docker build -t smooches-backend-prod:latest --target prod .",

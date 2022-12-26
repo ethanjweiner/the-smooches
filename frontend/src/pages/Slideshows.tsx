@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Card, Container, Form } from 'react-bootstrap';
 import Selector from '../components/Selector';
 import Slideshow from '../components/Slideshow';
 import { SLIDESHOW_INTERVAL } from '../utils/constants';
+import { debounce } from '../utils/helpers';
 
 function Slideshows() {
   const cardStyle = {
@@ -11,12 +12,16 @@ function Slideshows() {
     fontSize: 22,
   };
 
-  const [slideshowInterval, setSlideShowInterval] =
+  const [slideshowInterval, setSlideshowInterval] =
     useState(SLIDESHOW_INTERVAL);
 
+  const updateInterval = useCallback(debounce(setSlideshowInterval, 200), []);
+
+  const [sliderValue, setSliderValue] = useState(SLIDESHOW_INTERVAL);
+
   const onSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-    setSlideShowInterval(parseInt(e.target.value));
+    setSliderValue(parseInt(e.target.value));
+    updateInterval(e.target.value);
   };
 
   return (
@@ -28,7 +33,7 @@ function Slideshows() {
           <Form.Range
             min={500}
             max={20000}
-            value={slideshowInterval}
+            value={sliderValue}
             onChange={onSliderChange}
           ></Form.Range>
         </Card.Header>

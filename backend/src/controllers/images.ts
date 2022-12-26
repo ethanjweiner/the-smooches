@@ -3,6 +3,7 @@ import { Router } from 'express';
 import ImageModel from '../models/image';
 import multer from 'multer';
 import { putImage } from '../utils/s3_client';
+import { Image } from '../types/types';
 require('express-async-errors');
 
 const storage = multer.memoryStorage();
@@ -11,10 +12,19 @@ const upload = multer({ storage: storage });
 const ImagesRouter = Router();
 
 const getRandomImages = async (count: number, bucket: string) => {
-  const total = await ImageModel.count();
-  return await ImageModel.find({ bucket })
-    .skip(Math.floor((Math.random() / 2) * total))
-    .limit(count);
+  const total = await ImageModel.count({ bucket });
+
+  const imagePromises: Promise<Image>[] = [];
+
+  for (let index = 0; index < Math.min(count, total); index++) {
+    imagePromises.push(
+      ImageModel.findOne({ bucket })
+        .skip(Math.floor(Math.random() * total))
+        .then()
+    );
+  }
+
+  return Promise.all(imagePromises);
 };
 
 ImagesRouter.get('/:bucket', async (req, res) => {
@@ -29,6 +39,7 @@ ImagesRouter.get('/:bucket', async (req, res) => {
   }
 
   const images = await getRandomImages(count, bucket);
+  console.log(images);
 
   return res.json(images);
 });

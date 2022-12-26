@@ -1,5 +1,5 @@
 import { Image } from './types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { fetchImages } from './services/buckets';
 import { Queue } from './types';
 import { useSelectedBucket } from './store/bucket';
@@ -12,14 +12,17 @@ export function useImage(interval: number): Image | null {
 
   const images = new Queue<Image>();
 
-  const refreshImages = async () => {
+  const refreshImages = useCallback(async () => {
+    console.log('Images before refresh', images);
     if (images.isEmpty()) {
       const data = await fetchImages(bucket, 5);
       images.enqueue(...arrayShuffle(data));
     }
 
+    console.log('Images after refresh', images, images.isEmpty());
+
     setImage(images.dequeue());
-  };
+  }, [bucket]);
 
   useEffect(() => {
     refreshImages();
