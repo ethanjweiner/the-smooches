@@ -1,7 +1,7 @@
 import { MapLike } from 'typescript';
 import ImageModel from '../models/image';
 import config from './config';
-import { Bucket, Image } from './types';
+import { Bucket, Image } from '../types/types';
 
 export async function initDB() {
   // await ImageModel.deleteMany({});

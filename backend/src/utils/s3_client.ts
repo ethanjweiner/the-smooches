@@ -1,6 +1,6 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import config from './config';
-import { Bucket } from './types';
+import { Bucket } from '../types/types';
 import crypto from 'crypto';
 
 const randomImageName = (bytes = 32) =>

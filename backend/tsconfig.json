@@ -11,6 +11,13 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "noImplicitAny": true
-  }
+    "noImplicitAny": true,
+    "rootDirs": ["./src", "../shared"],
+    "typeRoots": ["./src/types"]
+  },
+  "files": [
+    "src/index.ts",
+    "src/types/extensions.d.ts"
+  ],
+  "include": ["src/**/*"]
 }

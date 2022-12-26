@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { Image } from '../utils/types';
+import { Image } from '../types/types';
 
 const imageSchema = new Schema<Image>({
   name: {

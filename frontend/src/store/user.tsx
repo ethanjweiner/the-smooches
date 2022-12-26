@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { Action, UserData } from '../types';
 import authService from '../services/authentication';
+import { setToken } from '../services/buckets';
 
 type UserAction = SetUserAction | DeleteUserAction;
 
@@ -59,13 +60,16 @@ function UserProvider({ children }: { children: React.ReactNode }) {
     login: async (username: string, password: string) => {
       const user = await authService.login(username, password);
       localStorage.setItem('user_data', JSON.stringify(user));
+      setToken(user.token);
       dispatch({ type: Action.SET, payload: user });
     },
     loadUser: () => {
       const savedUserJSON = localStorage.getItem('user_data');
 
       if (savedUserJSON) {
-        dispatch({ type: Action.SET, payload: JSON.parse(savedUserJSON) });
+        const user: UserData = JSON.parse(savedUserJSON);
+        setToken(user.token);
+        dispatch({ type: Action.SET, payload: user });
       }
     },
     logout: () => {

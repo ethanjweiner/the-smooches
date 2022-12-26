@@ -2,6 +2,12 @@ import axios from 'axios';
 
 import { Image } from '../types';
 
+let token: string | null = null;
+
+const setToken = (newToken: string) => {
+  token = newToken;
+};
+
 const fetchImages = async (
   bucket: string,
   count?: number
@@ -13,7 +19,6 @@ const fetchImages = async (
 
   const response = await axios.get(endpoint);
 
-  // No need to validate, type is shared from backend
   const images: Image[] = response.data;
   return images;
 };
@@ -26,8 +31,11 @@ const postImage = async (bucket: string, image: File, caption: string) => {
   formData.append('bucket', bucket);
 
   await axios.post('/api/images', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `bearer ${token}`,
+    },
   });
 };
 
-export { fetchImages, postImage };
+export { fetchImages, postImage, token, setToken };

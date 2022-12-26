@@ -5,7 +5,6 @@ import ImageUploader from '../components/ImageUploader';
 import { useSelectedBucket } from '../store/bucket';
 import { useState } from 'react';
 import { capitalize } from '../utils/helpers';
-import axios from 'axios';
 import { postImage } from '../services/buckets';
 
 function Upload() {

@@ -35,23 +35,26 @@ ImagesRouter.get('/:bucket', async (req, res) => {
 
 ImagesRouter.post('/', upload.single('image'), async (req, res) => {
   const { caption, bucket } = req.body;
-  res.status(200).send();
 
-  // Upload image to appropriate S3 bucket
+  if (!req.user) {
+    return res
+      .status(401)
+      .json({ error: 'Must be authenticated to upload images' });
+  }
+
   if (!req.file) {
-    throw new Error('No file given');
+    return res.status(400).json({ error: 'No file given' });
   }
 
   const imageName = await putImage(req.file, bucket);
 
-  // Add image to database w/ S3 src
   await ImageModel.create({
     name: imageName,
     caption,
     bucket,
   });
 
-  res.status(201).send();
+  return res.status(201).send();
 });
 
 export default ImagesRouter;

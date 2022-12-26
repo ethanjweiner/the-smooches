@@ -9,3 +9,8 @@ export interface Image {
   bucket: Bucket;
   caption?: string;
 }
+
+export interface UserData {
+  username: string;
+  token: string;
+}

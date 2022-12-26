@@ -2,6 +2,7 @@ import { Router } from 'express';
 const LoginRouter = Router();
 require('express-async-errors');
 import jwt from 'jsonwebtoken';
+import { UserData } from '../types/types';
 import config from '../utils/config';
 
 interface LoginDetails {
@@ -17,15 +18,13 @@ const isValidUser = (username: string, password: string): boolean => {
 };
 
 LoginRouter.post('/', async (req, res) => {
-  console.log(req.body);
-
   const { username, password }: LoginDetails = req.body;
 
   if (!isValidUser(username, password)) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
 
-  const userData = {
+  const userData: Omit<UserData, 'token'> = {
     username,
   };
 
