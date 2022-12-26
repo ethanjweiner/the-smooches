@@ -18,4 +18,16 @@ const fetchImages = async (
   return images;
 };
 
-export { fetchImages };
+const postImage = async (bucket: string, image: File, caption: string) => {
+  const formData = new FormData();
+
+  formData.append('image', image);
+  formData.append('caption', caption);
+  formData.append('bucket', bucket);
+
+  await axios.post('/api/images', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
+export { fetchImages, postImage };
