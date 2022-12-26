@@ -4,7 +4,7 @@ import config from './config';
 import { Bucket, Image } from './types';
 
 export async function initDB() {
-  await ImageModel.deleteMany({});
+  // await ImageModel.deleteMany({});
 
   if (typeof config.CLOUDFRONT_DIST_DOMAIN !== 'string') {
     throw new Error('No Cloudfront distribution domain provided.');

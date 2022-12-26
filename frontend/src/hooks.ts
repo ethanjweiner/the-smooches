@@ -1,12 +1,12 @@
 import { Image } from './types';
 import { useEffect, useState } from 'react';
-import { SLIDESHOW_INTERVAL } from './utils/constants';
 import { fetchImages } from './services/buckets';
 import { Queue } from './types';
 import { useSelectedBucket } from './store/bucket';
+import arrayShuffle from 'array-shuffle';
 
 // Provides an image state for
-export function useImage(): Image | null {
+export function useImage(interval: number): Image | null {
   const [image, setImage] = useState<Image | null>(null);
   const { bucket } = useSelectedBucket();
 
@@ -14,8 +14,8 @@ export function useImage(): Image | null {
 
   const refreshImages = async () => {
     if (images.isEmpty()) {
-      const data = await fetchImages(bucket, 10);
-      images.enqueue(...data);
+      const data = await fetchImages(bucket, 5);
+      images.enqueue(...arrayShuffle(data));
     }
 
     setImage(images.dequeue());
@@ -24,10 +24,10 @@ export function useImage(): Image | null {
   useEffect(() => {
     refreshImages();
 
-    const intervalId = setInterval(refreshImages, SLIDESHOW_INTERVAL);
+    const intervalId = setInterval(refreshImages, interval);
 
     return () => clearInterval(intervalId);
-  }, [bucket]);
+  }, [bucket, interval]);
 
   return image;
 }

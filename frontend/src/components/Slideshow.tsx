@@ -2,8 +2,8 @@ import { Card } from 'react-bootstrap';
 import { useImage } from '../hooks';
 import { imageNameToURL } from '../utils/helpers';
 
-function Slideshow() {
-  const image = useImage();
+function Slideshow({ interval }: { interval: number }) {
+  const image = useImage(interval);
 
   const imageBorder = {
     border: '15px dashed #2AB34C',

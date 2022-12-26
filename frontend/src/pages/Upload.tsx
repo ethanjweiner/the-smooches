@@ -57,12 +57,11 @@ function Upload() {
 
   const captionControls = (
     <>
-      <Form.Label>Caption</Form.Label>
       <Form.Control
         value={caption}
         onChange={(e) => setCaption(e.target.value)}
         type="text"
-        placeholder="Enter caption here"
+        placeholder="Enter optional caption"
         className="mb-3"
       ></Form.Control>
     </>
