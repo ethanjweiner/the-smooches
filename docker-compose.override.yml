@@ -1,5 +1,6 @@
 services:
   backend:
+    image: ejweiner/smooches-backend:dev
     build:
       context: './backend'
       target: 'dev'
@@ -12,6 +13,7 @@ services:
         source: ./backend
         target: /backend
   frontend:
+    image: ejweiner/smooches-frontend:dev
     build:
       context: './frontend'
       target: 'dev'

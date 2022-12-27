@@ -1,7 +1,9 @@
 services:
   backend:
+    image: ejweiner/smooches-backend:latest
     ports:
       - '8080:8080'
   frontend:
+    image: ejweiner/smooches-frontend:latest
     ports:
       - '80:80'
