@@ -1,0 +1,21 @@
+{
+  "name": "smooches",
+  "version": "1.0.0",
+  "description": "A slideshow of my dogs.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "./scripts/development/start.sh",
+    "build": "./scripts/development/build.sh",
+    "deploy": "./scripts/deployment/deploy.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethanjweiner/my-dogs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ethanjweiner/my-dogs/issues"
+  },
+  "homepage": "https://github.com/ethanjweiner/my-dogs#readme"
+}
