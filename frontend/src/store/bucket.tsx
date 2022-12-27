@@ -17,7 +17,6 @@ const initialState = {
   bucket: DEFAULT_BUCKET,
 };
 
-// Define reducers
 function reducer(state: State, action: BucketAction): State {
   switch (action.type) {
     case Action.SET:

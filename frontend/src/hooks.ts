@@ -1,15 +1,12 @@
 import { Image } from './types';
 import { useCallback, useEffect, useState } from 'react';
-import { fetchImages } from './services/buckets';
+import { fetchImages } from './services/images';
 import { Queue } from './types';
 import { useSelectedBucket } from './store/bucket';
 import arrayShuffle from 'array-shuffle';
 
 // Provides an image state for
-export function useImage(
-  interval: number,
-  clickCounter?: number
-): Image | null {
+export function useImage(interval: number): [Image | null, () => void] {
   const [image, setImage] = useState<Image | null>(null);
   const { bucket } = useSelectedBucket();
 
@@ -26,11 +23,9 @@ export function useImage(
 
   useEffect(() => {
     refreshImages();
-
     const intervalId = setInterval(refreshImages, interval);
-
     return () => clearInterval(intervalId);
-  }, [bucket, interval, clickCounter]);
+  }, [bucket, interval]);
 
-  return image;
+  return [image, refreshImages];
 }

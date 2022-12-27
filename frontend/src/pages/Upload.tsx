@@ -5,7 +5,7 @@ import ImageUploader from '../components/ImageUploader';
 import { useSelectedBucket } from '../store/bucket';
 import { useState } from 'react';
 import { capitalize } from '../utils/helpers';
-import { postImage } from '../services/buckets';
+import { postImage } from '../services/images';
 
 function Upload() {
   const { user } = useActiveUser();
@@ -48,7 +48,7 @@ function Upload() {
       <Button variant="success" onClick={uploadImages}>
         Upload photo to "{capitalize(bucket)}"
       </Button>
-      <Button variant="danger" onClick={reset}>
+      <Button variant="primary" onClick={reset}>
         Cancel
       </Button>
     </ButtonGroup>

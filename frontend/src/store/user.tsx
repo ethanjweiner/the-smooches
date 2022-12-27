@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { Action, UserData } from '../types';
 import authService from '../services/authentication';
-import { setToken } from '../services/buckets';
+import { setToken } from '../services/images';
 
 type UserAction = SetUserAction | DeleteUserAction;
 
@@ -22,7 +22,6 @@ const initialState: State = {
   user: null,
 };
 
-// Define reducers
 function reducer(state: State, action: UserAction): State {
   switch (action.type) {
     case Action.SET:

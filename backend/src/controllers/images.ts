@@ -2,7 +2,7 @@ import { DEFAULT_COUNT } from '../utils/constants';
 import { Router } from 'express';
 import ImageModel from '../models/image';
 import multer from 'multer';
-import { putImage } from '../utils/s3_client';
+import { deleteImage, putImage } from '../utils/s3_client';
 import { Image } from '../types/types';
 require('express-async-errors');
 
@@ -68,6 +68,24 @@ ImagesRouter.post('/', upload.single('image'), async (req, res) => {
   });
 
   return res.status(201).send();
+});
+
+ImagesRouter.delete('/:name', async (req, res) => {
+  const { name } = req.params;
+
+  const imageToDelete = await ImageModel.findOne({ name });
+
+  if (!imageToDelete) {
+    return res.status(400).json({ error: 'Specified image does not exist' });
+  }
+
+  if (process.env['NODE_ENV'] === 'production') {
+    await deleteImage(imageToDelete.name, imageToDelete.bucket);
+  }
+
+  await imageToDelete.delete();
+
+  return res.status(204).send();
 });
 
 export default ImagesRouter;

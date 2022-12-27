@@ -1,3 +1,17 @@
 * {
   font-family: "News Cycle","Arial Narrow Bold",sans-serif
 }
+
+.image-container {
+    position: relative;
+    width: 100%;
+}
+
+.image-container .delete-button {
+    position: absolute;
+    top: 25px;
+    right: 45px;
+    padding: 12px 24px;
+    cursor: pointer;
+    box-shadow: 5px 5px;
+}
