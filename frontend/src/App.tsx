@@ -7,6 +7,9 @@ import Upload from './pages/Upload';
 import { useActiveUser } from './store/user';
 import { useEffect } from 'react';
 
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallback from './components/ErrorFallback';
+
 function App() {
   const { loadUser } = useActiveUser();
 
@@ -17,10 +20,12 @@ function App() {
   return (
     <Router>
       <Navigation />
-      <Routes>
-        <Route path="/" element={<Slideshows />}></Route>
-        <Route path="/upload" element={<Upload />}></Route>
-      </Routes>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Routes>
+          <Route path="/" element={<Slideshows />}></Route>
+          <Route path="/upload" element={<Upload />}></Route>
+        </Routes>
+      </ErrorBoundary>
     </Router>
   );
 }

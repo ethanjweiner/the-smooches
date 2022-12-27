@@ -1,6 +1,5 @@
-import { useCallback } from 'react';
 import { Button, Card, Container } from 'react-bootstrap';
-import { useImage } from '../hooks';
+import { useCustomErrorHandler, useImage } from '../hooks';
 import { deleteImage } from '../services/images';
 import { Image } from '../types';
 import { imageNameToURL } from '../utils/helpers';
@@ -9,8 +8,15 @@ import Icon from './Icon';
 function Slideshow({ interval }: { interval: number }) {
   const [image, refreshImages] = useImage(interval);
 
+  const handleError = useCustomErrorHandler();
+
   const onDeleteClick = async (imageToDelete: Image) => {
-    await deleteImage(imageToDelete.name);
+    try {
+      await deleteImage(imageToDelete.name);
+    } catch (error) {
+      handleError(error);
+    }
+
     refreshImages();
   };
 

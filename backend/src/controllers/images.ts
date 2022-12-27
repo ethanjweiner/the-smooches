@@ -4,7 +4,7 @@ import ImageModel from '../models/image';
 import multer from 'multer';
 import { deleteImage, putImage } from '../utils/s3_client';
 import { Image } from '../types/types';
-require('express-async-errors');
+import { authenticate } from '../utils/middleware';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -46,37 +46,36 @@ ImagesRouter.get('/:bucket', async (req, res) => {
   return res.json(images);
 });
 
-ImagesRouter.post('/', upload.single('image'), async (req, res) => {
-  const { caption, bucket } = req.body;
+ImagesRouter.post(
+  '/',
+  authenticate,
+  upload.single('image'),
+  async (req, res) => {
+    const { caption, bucket } = req.body;
 
-  if (!req.user) {
-    return res
-      .status(401)
-      .json({ error: 'Must be authenticated to upload images' });
+    if (!req.file) {
+      throw Error('no file given');
+    }
+
+    const imageName = await putImage(req.file, bucket);
+
+    await ImageModel.create({
+      name: imageName,
+      caption,
+      bucket,
+    });
+
+    return res.status(201).send();
   }
+);
 
-  if (!req.file) {
-    return res.status(400).json({ error: 'No file given' });
-  }
-
-  const imageName = await putImage(req.file, bucket);
-
-  await ImageModel.create({
-    name: imageName,
-    caption,
-    bucket,
-  });
-
-  return res.status(201).send();
-});
-
-ImagesRouter.delete('/:name', async (req, res) => {
+ImagesRouter.delete('/:name', authenticate, async (req, res) => {
   const { name } = req.params;
 
   const imageToDelete = await ImageModel.findOne({ name });
 
   if (!imageToDelete) {
-    return res.status(400).json({ error: 'Specified image does not exist' });
+    throw Error('specified image does not exist');
   }
 
   if (process.env['NODE_ENV'] === 'production') {

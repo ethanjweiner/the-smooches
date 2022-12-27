@@ -45,7 +45,7 @@ export const useActiveUser = (): UserContextInterface => {
   const contextValue = useContext(UserContext);
 
   if (!contextValue) {
-    throw Error('User context unavailable');
+    throw Error('user context unavailable');
   }
 
   return contextValue;

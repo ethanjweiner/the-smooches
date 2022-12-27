@@ -4,6 +4,8 @@ import { fetchImages } from './services/images';
 import { Queue } from './types';
 import { useSelectedBucket } from './store/bucket';
 import arrayShuffle from 'array-shuffle';
+import { useErrorHandler } from 'react-error-boundary';
+import { AxiosError } from 'axios';
 
 // Provides an image state for
 export function useImage(interval: number): [Image | null, () => void] {
@@ -28,4 +30,21 @@ export function useImage(interval: number): [Image | null, () => void] {
   }, [bucket, interval]);
 
   return [image, refreshImages];
+}
+
+export function useCustomErrorHandler() {
+  const defaultHandler = useErrorHandler();
+
+  return function (error: unknown) {
+    let message = 'An error occurred.';
+    console.log(error);
+
+    if (error instanceof AxiosError && error.response?.data.message) {
+      message = error.response.data.message;
+    } else if (error instanceof Error) {
+      message = error.message;
+    }
+
+    defaultHandler(new Error(message));
+  };
 }

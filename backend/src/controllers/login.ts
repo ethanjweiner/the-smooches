@@ -1,6 +1,5 @@
 import { Router } from 'express';
 const LoginRouter = Router();
-require('express-async-errors');
 import jwt from 'jsonwebtoken';
 import { UserData } from '../types/types';
 import config from '../utils/config';
@@ -21,18 +20,15 @@ LoginRouter.post('/', async (req, res) => {
   const { username, password }: LoginDetails = req.body;
 
   if (!isValidUser(username, password)) {
-    return res.status(401).json({ error: 'Invalid credentials' });
+    throw Error('invalid credentials');
   }
 
   const userData: Omit<UserData, 'token'> = {
     username,
   };
 
-  if (!config.JWT_SECRET) {
-    return res.status(500).json({ error: 'No secret configured' });
-  }
+  const token = jwt.sign(userData, config.JWT_SECRET || '');
 
-  const token = jwt.sign(userData, config.JWT_SECRET);
   return res.status(200).json({
     token,
     username,

@@ -39,7 +39,11 @@ const postImage = async (bucket: string, image: File, caption: string) => {
 };
 
 const deleteImage = async (imageName: string) => {
-  await axios.delete(`/api/images/${imageName}`);
+  await axios.delete(`/api/images/${imageName}`, {
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+  });
 };
 
 export { fetchImages, postImage, deleteImage, token, setToken };

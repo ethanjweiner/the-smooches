@@ -37,7 +37,7 @@ export const useSelectedBucket = () => {
   const contextValue = useContext(SelectedBucketContext);
 
   if (!contextValue) {
-    throw Error('Bucket context unavailable');
+    throw Error('bucket context unavailable');
   }
 
   return contextValue;
