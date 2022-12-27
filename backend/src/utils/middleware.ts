@@ -38,10 +38,16 @@ export const loadUser = (req: Request, _: Response, next: NextFunction) => {
   next();
 };
 
-export const authenticate = async (req: Request) => {
+export const authenticate = async (
+  req: Request,
+  _: Response,
+  next: NextFunction
+) => {
   if (!req.user) {
     throw Error('authentication required');
   }
+
+  next();
 };
 
 export const errorHandler = (

@@ -39,6 +39,7 @@ const postImage = async (bucket: string, image: File, caption: string) => {
 };
 
 const deleteImage = async (imageName: string) => {
+  console.log(token);
   await axios.delete(`/api/images/${imageName}`, {
     headers: {
       Authorization: `bearer ${token}`,
