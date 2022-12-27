@@ -20,7 +20,6 @@ export const debounce = (func: (...args: any[]) => any, ms: number) => {
     clearTimeout(timeoutID);
 
     timeoutID = setTimeout(() => {
-      console.log('called');
       func(args);
     }, ms);
   };

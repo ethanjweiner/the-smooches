@@ -11,17 +11,20 @@ const upload = multer({ storage: storage });
 
 const ImagesRouter = Router();
 
-const getRandomImages = async (count: number, bucket: string) => {
+const getRandomImages = async (maxCount: number, bucket: string) => {
   const total = await ImageModel.count({ bucket });
 
   const imagePromises: Promise<Image>[] = [];
+  const imageIndices: number[] = [];
 
-  for (let index = 0; index < Math.min(count, total); index++) {
-    imagePromises.push(
-      ImageModel.findOne({ bucket })
-        .skip(Math.floor(Math.random() * total))
-        .then()
-    );
+  for (let index = 0; index < Math.min(maxCount, total); index++) {
+    const randIndex = Math.floor(Math.random() * total);
+
+    if (imageIndices.includes(randIndex)) {
+      continue;
+    }
+
+    imagePromises.push(ImageModel.findOne({ bucket }).skip(randIndex).then());
   }
 
   return Promise.all(imagePromises);
@@ -39,7 +42,6 @@ ImagesRouter.get('/:bucket', async (req, res) => {
   }
 
   const images = await getRandomImages(count, bucket);
-  console.log(images);
 
   return res.json(images);
 });

@@ -21,9 +21,14 @@ function Slideshow({ interval }: { interval: number }) {
 
   return (
     <>
-      {image.caption && (
-        <Card.Footer style={captionStyle}>{image.caption}</Card.Footer>
-      )}
+      <Card.Footer>
+        {image.caption && (
+          <Card.Text style={captionStyle} className="text-primary">
+            {image.caption}
+          </Card.Text>
+        )}
+        <Card.Subtitle>Click below to change image</Card.Subtitle>
+      </Card.Footer>
       <Card.Img
         variant="bottom"
         src={imageNameToURL(image.name, image.bucket)}

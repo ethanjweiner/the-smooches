@@ -16,7 +16,6 @@ export function useImage(
   const images = new Queue<Image>();
 
   const refreshImages = useCallback(async () => {
-    console.log('Images before refresh', images);
     if (images.isEmpty()) {
       const data = await fetchImages(bucket, 5);
       images.enqueue(...arrayShuffle(data));
