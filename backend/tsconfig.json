@@ -12,7 +12,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "noImplicitAny": true,
-    "rootDirs": ["./src", "../shared"],
+    "rootDirs": ["./src"],
     "typeRoots": ["./src/types"]
   },
   "files": [
