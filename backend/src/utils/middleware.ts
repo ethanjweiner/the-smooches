@@ -63,6 +63,9 @@ export const errorHandler = (
     case 'authentication required':
       res.status(403);
       break;
+    case 'invalid bucket':
+      res.status(400);
+      break;
     default:
       res.status(500);
   }

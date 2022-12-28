@@ -1,15 +1,9 @@
 import { Router } from 'express';
 const LoginRouter = Router();
 import jwt from 'jsonwebtoken';
-import { UserData } from '../types/types';
+import { UserData, LoginDetails } from '../types/types';
 import config from '../utils/config';
 
-interface LoginDetails {
-  username: string;
-  password: string;
-}
-
-// TODO: Allow non-admin users
 const isValidUser = (username: string, password: string): boolean => {
   return (
     username === config.ADMIN_USERNAME && password === config.ADMIN_PASSWORD

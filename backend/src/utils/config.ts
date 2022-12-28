@@ -1,29 +1,5 @@
 require('dotenv').config();
 
-const {
-  PORT,
-  MONGODB_URI,
-  NODE_ENV,
-  CLOUDFRONT_DIST_DOMAIN,
-  ADMIN_USERNAME,
-  ADMIN_PASSWORD,
-  JWT_SECRET,
-  S3_BUCKET_NAME,
-  S3_BUCKET_REGION,
-  AWS_ACCESS_KEY_ID,
-  AWS_SECRET_ACCESS_KEY,
-} = process.env;
+export const DEFAULT_COUNT = 10;
 
-export default {
-  PORT,
-  MONGODB_URI,
-  NODE_ENV,
-  CLOUDFRONT_DIST_DOMAIN,
-  ADMIN_USERNAME,
-  ADMIN_PASSWORD,
-  JWT_SECRET,
-  S3_BUCKET_NAME,
-  S3_BUCKET_REGION,
-  AWS_ACCESS_KEY_ID,
-  AWS_SECRET_ACCESS_KEY,
-};
+export default process.env;

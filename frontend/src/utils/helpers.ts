@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CLOUDFRONT_DIST_DOMAIN, TEST_IMAGE_PATH } from './constants';
+import { CLOUDFRONT_DIST_DOMAIN } from './constants';
 
 export function capitalize(string: string): string {
   return string[0].toUpperCase() + string.slice(1);
@@ -8,7 +8,7 @@ export function capitalize(string: string): string {
 export const imageNameToURL = (imageName: string, bucketName: string) => {
   const path =
     process.env.NODE_ENV === 'development'
-      ? TEST_IMAGE_PATH
+      ? 'https://smooches-images-dev.s3.amazonaws.com'
       : CLOUDFRONT_DIST_DOMAIN;
   return `${path}/${bucketName}/${imageName}`;
 };

@@ -15,3 +15,8 @@ export interface UserData {
   username: string;
   token: string;
 }
+
+export interface LoginDetails {
+  username: string;
+  password: string;
+}

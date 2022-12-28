@@ -1,46 +1,24 @@
-import { DEFAULT_COUNT } from '../utils/constants';
+import { DEFAULT_COUNT } from '../utils/config';
 import { Router } from 'express';
 import ImageModel from '../models/image';
 import multer from 'multer';
 import { deleteImage, putImage } from '../utils/s3_client';
-import { Bucket, Image } from '../types/types';
+import { Bucket } from '../types/types';
 import { authenticate } from '../utils/middleware';
-import { randomImageName } from '../utils/helpers';
+import { getRandomImages } from '../utils/helpers';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const ImagesRouter = Router();
 
-const getRandomImages = async (maxCount: number, bucket: string) => {
-  const total = await ImageModel.count({ bucket });
-
-  const imagePromises: Promise<Image>[] = [];
-  const imageIndices: number[] = [];
-
-  for (let index = 0; index < Math.min(maxCount, total); index++) {
-    const randIndex = Math.floor(Math.random() * total);
-
-    if (imageIndices.includes(randIndex)) {
-      continue;
-    }
-
-    imagePromises.push(ImageModel.findOne({ bucket }).skip(randIndex).then());
-  }
-
-  return Promise.all(imagePromises);
-};
-
 ImagesRouter.get('/:bucket', async (req, res) => {
   const { bucket } = req.params;
 
-  let count: number;
-
-  if (typeof req.query.count == 'string') {
-    count = parseInt(req.query.count);
-  } else {
-    count = DEFAULT_COUNT;
-  }
+  const count =
+    typeof req.query.count === 'string'
+      ? parseInt(req.query.count)
+      : DEFAULT_COUNT;
 
   const images = await getRandomImages(count, bucket);
 
@@ -51,7 +29,6 @@ ImagesRouter.post('/', upload.single('image'), async (req, res) => {
   let { caption, bucket } = req.body;
 
   // If unauthenticated, force redirect upload to community
-  console.log(req.user, bucket);
   if (!req.user && bucket !== Bucket.community) {
     throw Error('authentication required');
   }
@@ -60,10 +37,7 @@ ImagesRouter.post('/', upload.single('image'), async (req, res) => {
     throw Error('no file given');
   }
 
-  const imageName =
-    process.env['NODE_ENV'] === 'production'
-      ? await putImage(req.file, bucket)
-      : randomImageName();
+  const imageName = await putImage(req.file, bucket);
 
   await ImageModel.create({
     name: imageName,
@@ -83,10 +57,7 @@ ImagesRouter.delete('/:name', authenticate, async (req, res) => {
     throw Error('specified image does not exist');
   }
 
-  if (process.env['NODE_ENV'] === 'production') {
-    await deleteImage(imageToDelete.name, imageToDelete.bucket);
-  }
-
+  await deleteImage(imageToDelete.name, imageToDelete.bucket);
   await imageToDelete.delete();
 
   return res.status(204).send();
