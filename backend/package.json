@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "dev": "ts-node-dev --respawn --ignore-watch node_modules ./src/index.ts",
-    "debug": "ts-node-dev --respawn --ignore-watch node_modules ./src/index.ts --inspect",
+    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch */node_modules ./src/index.ts",
+    "debug": "ts-node-dev --respawn --transpile-only --ignore-watch */node_modules ./src/index.ts --inspect",
     "start": "node build/index.js",
     "build": "npx tsc",
     "build-container": "docker build -t smooches-backend-prod:latest --target prod .",
