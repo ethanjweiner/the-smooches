@@ -1,5 +1,5 @@
 #!/bin/sh
 
-# Test application locally in a containerized environment with hot reload.
+# Build development application images.
 
 docker compose up --build

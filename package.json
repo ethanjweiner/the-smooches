@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "./scripts/development/start.sh",
     "build": "./scripts/development/build.sh",
-    "deploy": "./scripts/deployment/deploy.sh"
+    "deploy": "./scripts/deployment/deploy.sh",
+    "production-test": "./scripts/production/test.sh"
   },
   "repository": {
     "type": "git",
