@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { RawAxiosRequestHeaders } from 'axios';
 
 import { Image } from '../types';
 
@@ -30,8 +30,7 @@ const postImage = async (bucket: string, image: File, caption: string) => {
   formData.append('caption', caption);
   formData.append('bucket', bucket);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const headers: any = {
+  const headers: RawAxiosRequestHeaders = {
     'Content-Type': 'multipart/form-data',
   };
 
@@ -45,8 +44,7 @@ const postImage = async (bucket: string, image: File, caption: string) => {
 };
 
 const deleteImage = async (imageName: string) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const headers: any = {};
+  const headers: RawAxiosRequestHeaders = {};
 
   if (token) {
     headers['Authorization'] = `bearer ${token}`;

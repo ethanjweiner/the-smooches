@@ -7,17 +7,22 @@ import arrayShuffle from 'array-shuffle';
 import { useErrorHandler } from 'react-error-boundary';
 import { AxiosError } from 'axios';
 
-// Provides an image state for
 export function useImage(interval: number): [Image | null, () => void] {
   const [image, setImage] = useState<Image | null>(null);
   const { bucket } = useSelectedBucket();
+
+  const handleError = useCustomErrorHandler();
 
   const images = new Queue<Image>();
 
   const refreshImages = useCallback(async () => {
     if (images.isEmpty()) {
-      const data = await fetchImages(bucket, 5);
-      images.enqueue(...arrayShuffle(data));
+      try {
+        const data = await fetchImages(bucket, 5);
+        images.enqueue(...arrayShuffle(data));
+      } catch (error) {
+        handleError(error);
+      }
     }
 
     setImage(images.dequeue());

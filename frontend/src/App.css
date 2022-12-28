@@ -15,3 +15,13 @@
     cursor: pointer;
     box-shadow: 5px 5px;
 }
+
+.no-underline {
+  text-decoration: none; 
+}
+
+.card {
+  max-width: 600px;
+  border-width: 5px;
+  font-size: 22px;
+}

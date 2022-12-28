@@ -37,6 +37,10 @@ ImagesRouter.post('/', upload.single('image'), async (req, res) => {
     throw Error('no file given');
   }
 
+  if (!Object.values(Bucket).includes(bucket)) {
+    throw Error('bucket does not exist');
+  }
+
   const imageName = await putImage(req.file, bucket);
 
   await ImageModel.create({

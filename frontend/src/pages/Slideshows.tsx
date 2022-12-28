@@ -3,22 +3,21 @@ import { Card, Container, Form } from 'react-bootstrap';
 import Selector from '../components/Selector';
 import Slideshow from '../components/Slideshow';
 import { Bucket } from '../types';
-import { SLIDESHOW_INTERVAL } from '../utils/constants';
+import {
+  MAX_SLIDESHOW_INTERVAL,
+  MIN_SLIDESHOW_INTERVAL,
+  DEFAULT_SLIDESHOW_INTERVAL,
+} from '../utils/constants';
 import { debounce } from '../utils/helpers';
 
 function Slideshows() {
-  const cardStyle = {
-    maxWidth: 600,
-    borderWidth: 5,
-    fontSize: 22,
-  };
-
-  const [slideshowInterval, setSlideshowInterval] =
-    useState(SLIDESHOW_INTERVAL);
+  const [slideshowInterval, setSlideshowInterval] = useState(
+    DEFAULT_SLIDESHOW_INTERVAL
+  );
 
   const updateInterval = useCallback(debounce(setSlideshowInterval, 200), []);
 
-  const [sliderValue, setSliderValue] = useState(SLIDESHOW_INTERVAL);
+  const [sliderValue, setSliderValue] = useState(DEFAULT_SLIDESHOW_INTERVAL);
 
   const onSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSliderValue(parseInt(e.target.value));
@@ -27,14 +26,14 @@ function Slideshows() {
 
   return (
     <Container>
-      <Card border="primary" className="mt-4 mx-auto" style={cardStyle}>
+      <Card border="primary" className="mt-4 mx-auto">
         <Card.Header>
           <Selector buckets={Object.values(Bucket)} />
           <hr></hr>
           <Form.Label>Slideshow Speed</Form.Label>
           <Form.Range
-            min={500}
-            max={20000}
+            min={MIN_SLIDESHOW_INTERVAL}
+            max={MAX_SLIDESHOW_INTERVAL}
             value={sliderValue}
             onChange={onSliderChange}
           ></Form.Range>

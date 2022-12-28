@@ -4,12 +4,13 @@ import { Bucket } from '../types';
 import { capitalize } from '../utils/helpers';
 
 function Selector({ buckets }: { buckets: Bucket[] }) {
-  const { setBucket } = useSelectedBucket();
+  const { bucket: selectedBucket, setBucket } = useSelectedBucket();
 
   return (
     <Nav
-      className="flex-column flex-md-row"
+      className="flex-column flex-sm-row"
       variant="pills"
+      activeKey={selectedBucket}
       defaultActiveKey={Bucket.community}
     >
       {buckets.map((bucket) => (

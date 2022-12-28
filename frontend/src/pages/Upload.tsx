@@ -8,6 +8,7 @@ import { capitalize } from '../utils/helpers';
 import { postImage } from '../services/images';
 import { Bucket } from '../types';
 import { useEffect } from 'react';
+import { useCustomErrorHandler } from '../hooks';
 
 function Upload() {
   const { user } = useActiveUser();
@@ -20,7 +21,7 @@ function Upload() {
     if (!user && selectedBucket != Bucket.community) {
       setBucket(Bucket.community);
     }
-  }, []);
+  }, [user]);
 
   const buckets: Bucket[] = user ? Object.values(Bucket) : [Bucket.community];
 
@@ -35,19 +36,25 @@ function Upload() {
     setCaption('');
   };
 
-  const uploadImages = async () => {
+  const handleError = useCustomErrorHandler();
+
+  const uploadImage = async () => {
     if (!image) {
       throw new Error('no image selected');
     }
 
-    await postImage(selectedBucket, image, caption);
+    try {
+      await postImage(selectedBucket, image, caption);
+    } catch (error) {
+      handleError(error);
+    }
 
     reset();
   };
 
   const uploadControls = (
     <ButtonGroup size="lg">
-      <Button variant="success" onClick={uploadImages}>
+      <Button variant="success" onClick={uploadImage}>
         Upload photo to "{capitalize(selectedBucket)}"
       </Button>
       <Button variant="primary" onClick={reset}>
@@ -80,7 +87,7 @@ function Upload() {
           className="text-secondary mb-3"
           style={{ fontStyle: 'italic' }}
         >
-          sign in for more
+          {!user && '(sign in for more)'}
         </Card.Subtitle>
         <Selector buckets={buckets}></Selector>
         <hr></hr>

@@ -15,6 +15,7 @@ const baseStyle = {
   color: '#bdbdbd',
   outline: 'none',
   transition: 'border .24s ease-in-out',
+  cursor: 'pointer',
 };
 
 const focusedStyle = {
@@ -61,7 +62,7 @@ function ImageUploader({ onUpload }: { onUpload: (image: File) => void }) {
     <div {...getRootProps({ style } as DropzoneRootProps)}>
       <input {...getInputProps()} />
       {isDragActive ? (
-        <p>Drop the image file here...</p>
+        <p>Drop the image here...</p>
       ) : (
         <p>Drag and drop image, or click to select</p>
       )}

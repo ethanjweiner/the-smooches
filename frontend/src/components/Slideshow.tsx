@@ -12,6 +12,10 @@ function Slideshow({ interval }: { interval: number }) {
 
   const handleError = useCustomErrorHandler();
 
+  if (!image) {
+    return null;
+  }
+
   const onDeleteClick = async (imageToDelete: Image) => {
     try {
       await deleteImage(imageToDelete.name);
@@ -26,19 +30,11 @@ function Slideshow({ interval }: { interval: number }) {
     border: '15px dashed #2AB34C',
   };
 
-  const captionStyle = {
-    fontStyle: 'italic',
-  };
-
-  if (!image) {
-    return null;
-  }
-
   return (
     <>
       <Card.Footer>
         {image.caption && (
-          <Card.Text style={captionStyle} className="text-primary">
+          <Card.Text style={{ fontStyle: 'italic' }} className="text-primary">
             {image.caption}
           </Card.Text>
         )}

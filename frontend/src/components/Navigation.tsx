@@ -7,24 +7,19 @@ import Icon from './Icon';
 
 function Navigation() {
   const navStyle = {
-    borderBottom: '15px solid #2AB34C',
-    color: 'red',
-  };
-
-  const noUnderline = {
-    textDecoration: 'none',
+    borderBottom: '15px solid #EB6764',
   };
 
   return (
     <Navbar bg="light" expand="lg" style={navStyle}>
       <Container>
-        <Link to="/" style={noUnderline}>
-          <Navbar.Brand>THE SMOOCHES</Navbar.Brand>
+        <Link to="/" className="no-underline">
+          <Navbar.Brand className="text-primary">THE SMOOCHES</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link to="/" style={noUnderline}>
+            <Link to="/" className="no-underline">
               <Nav.Link as="span">
                 <Icon>
                   <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
@@ -33,7 +28,7 @@ function Navigation() {
                 Slideshows
               </Nav.Link>
             </Link>
-            <Link to="/upload" style={noUnderline}>
+            <Link to="/upload" className="no-underline">
               <Nav.Link as="span">
                 <Icon>
                   <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />

@@ -1,3 +1,6 @@
 body {
-  background: #f19d9c;
+  background: #edecec;
+  background-image: url('../public/background.png');
+  background-repeat: repeat;
+  background-size: 500px 450px;
 }
