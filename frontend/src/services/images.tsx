@@ -39,8 +39,6 @@ const postImage = async (bucket: string, image: File, caption: string) => {
     headers['Authorization'] = `bearer ${token}`;
   }
 
-  console.log(headers);
-
   await axios.post('/api/images', formData, {
     headers,
   });

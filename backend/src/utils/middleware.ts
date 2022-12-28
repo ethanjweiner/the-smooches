@@ -15,7 +15,6 @@ export const loadToken = (req: Request, _: Response, next: NextFunction) => {
 };
 
 export const loadUser = (req: Request, _: Response, next: NextFunction) => {
-  console.log(req.token, config.JWT_SECRET);
   if (!req.token || !config.JWT_SECRET) {
     req.user = null;
     next();
