@@ -39,7 +39,11 @@ const postImage = async (bucket: string, image: File, caption: string) => {
     headers['Authorization'] = `bearer ${token}`;
   }
 
-  await axios.post('/api/images', formData, headers);
+  console.log(headers);
+
+  await axios.post('/api/images', formData, {
+    headers,
+  });
 };
 
 const deleteImage = async (imageName: string) => {
@@ -51,9 +55,7 @@ const deleteImage = async (imageName: string) => {
   }
 
   await axios.delete(`/api/images/${imageName}`, {
-    headers: {
-      Authorization: `bearer ${token}`,
-    },
+    headers,
   });
 };
 

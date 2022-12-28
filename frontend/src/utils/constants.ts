@@ -3,5 +3,7 @@ import { Bucket } from '../types';
 export const SLIDESHOW_INTERVAL = 5000;
 export const DEFAULT_BUCKET = Bucket.community;
 export const DEFAULT_ICON_SIZE = 20;
-export const CLOUDFRONT_DIST_DOMAIN = 'https://d2jsbe4kz9t2p7.cloudfront.net';
-export const TEST_IMAGE_PATH = '/images';
+export const S3_DIST_DOMAIN =
+  process.env.NODE_ENV === 'development'
+    ? 'https://smooches-images-dev.s3.amazonaws.com'
+    : 'https://d2jsbe4kz9t2p7.cloudfront.net';
