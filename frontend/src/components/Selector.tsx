@@ -3,16 +3,14 @@ import { useSelectedBucket } from '../store/bucket';
 import { Bucket } from '../types';
 import { capitalize } from '../utils/helpers';
 
-function PillsExample() {
-  const buckets = Object.values(Bucket);
-
-  const { bucket: selectedBucket, setBucket } = useSelectedBucket();
+function Selector({ buckets }: { buckets: Bucket[] }) {
+  const { setBucket } = useSelectedBucket();
 
   return (
     <Nav
-      className="justify-content-center flex-column flex-md-row"
+      className="flex-column flex-md-row"
       variant="pills"
-      defaultActiveKey={selectedBucket}
+      defaultActiveKey={Bucket.community}
     >
       {buckets.map((bucket) => (
         <Nav.Item key={bucket}>
@@ -25,4 +23,4 @@ function PillsExample() {
   );
 }
 
-export default PillsExample;
+export default Selector;

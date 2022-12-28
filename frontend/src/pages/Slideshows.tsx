@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { Card, Container, Form } from 'react-bootstrap';
 import Selector from '../components/Selector';
 import Slideshow from '../components/Slideshow';
+import { Bucket } from '../types';
 import { SLIDESHOW_INTERVAL } from '../utils/constants';
 import { debounce } from '../utils/helpers';
 
@@ -28,7 +29,8 @@ function Slideshows() {
     <Container>
       <Card border="primary" className="mt-4 mx-auto" style={cardStyle}>
         <Card.Header>
-          <Selector />
+          <Selector buckets={Object.values(Bucket)} />
+          <hr></hr>
           <Form.Label>Slideshow Speed</Form.Label>
           <Form.Range
             min={500}

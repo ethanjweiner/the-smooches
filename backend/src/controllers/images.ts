@@ -3,8 +3,9 @@ import { Router } from 'express';
 import ImageModel from '../models/image';
 import multer from 'multer';
 import { deleteImage, putImage } from '../utils/s3_client';
-import { Image } from '../types/types';
+import { Bucket, Image } from '../types/types';
 import { authenticate } from '../utils/middleware';
+import { randomImageName } from '../utils/helpers';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -46,28 +47,32 @@ ImagesRouter.get('/:bucket', async (req, res) => {
   return res.json(images);
 });
 
-ImagesRouter.post(
-  '/',
-  authenticate,
-  upload.single('image'),
-  async (req, res) => {
-    const { caption, bucket } = req.body;
+ImagesRouter.post('/', upload.single('image'), async (req, res) => {
+  let { caption, bucket } = req.body;
 
-    if (!req.file) {
-      throw Error('no file given');
-    }
-
-    const imageName = await putImage(req.file, bucket);
-
-    await ImageModel.create({
-      name: imageName,
-      caption,
-      bucket,
-    });
-
-    return res.status(201).send();
+  // If unauthenticated, force redirect upload to community
+  console.log(req.user, bucket);
+  if (!req.user && bucket !== Bucket.community) {
+    throw Error('authentication required');
   }
-);
+
+  if (!req.file) {
+    throw Error('no file given');
+  }
+
+  const imageName =
+    process.env['NODE_ENV'] === 'production'
+      ? await putImage(req.file, bucket)
+      : randomImageName();
+
+  await ImageModel.create({
+    name: imageName,
+    caption,
+    bucket,
+  });
+
+  return res.status(201).send();
+});
 
 ImagesRouter.delete('/:name', authenticate, async (req, res) => {
   const { name } = req.params;

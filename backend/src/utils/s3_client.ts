@@ -5,10 +5,7 @@ import {
 } from '@aws-sdk/client-s3';
 import config from './config';
 import { Bucket } from '../types/types';
-import crypto from 'crypto';
-
-const randomImageName = (bytes = 32) =>
-  crypto.randomBytes(bytes).toString('hex');
+import { randomImageName } from './helpers';
 
 const s3 = new S3Client({
   credentials: {

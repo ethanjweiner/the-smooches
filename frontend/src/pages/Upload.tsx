@@ -6,21 +6,23 @@ import { useSelectedBucket } from '../store/bucket';
 import { useState } from 'react';
 import { capitalize } from '../utils/helpers';
 import { postImage } from '../services/images';
+import { Bucket } from '../types';
+import { useEffect } from 'react';
 
 function Upload() {
   const { user } = useActiveUser();
-  const { bucket } = useSelectedBucket();
+  const { bucket: selectedBucket, setBucket } = useSelectedBucket();
 
   const [image, setImage] = useState<File | null>(null);
   const [caption, setCaption] = useState<string>('');
 
-  if (!user) {
-    return (
-      <h2 className="mt-5 text-center">
-        You must be logged in to upload images.
-      </h2>
-    );
-  }
+  useEffect(() => {
+    if (!user && selectedBucket != Bucket.community) {
+      setBucket(Bucket.community);
+    }
+  }, []);
+
+  const buckets: Bucket[] = user ? Object.values(Bucket) : [Bucket.community];
 
   const cardStyle = {
     maxWidth: 600,
@@ -38,7 +40,7 @@ function Upload() {
       throw new Error('no image selected');
     }
 
-    await postImage(bucket, image, caption);
+    await postImage(selectedBucket, image, caption);
 
     reset();
   };
@@ -46,7 +48,7 @@ function Upload() {
   const uploadControls = (
     <ButtonGroup size="lg">
       <Button variant="success" onClick={uploadImages}>
-        Upload photo to "{capitalize(bucket)}"
+        Upload photo to "{capitalize(selectedBucket)}"
       </Button>
       <Button variant="primary" onClick={reset}>
         Cancel
@@ -72,8 +74,15 @@ function Upload() {
         <Card.Title>Upload Images</Card.Title>
       </Card.Header>
       <Card.Body>
-        <Card.Text>Select a slideshow:</Card.Text>
-        <Selector></Selector>
+        <p>Select a slideshow option</p>
+
+        <Card.Subtitle
+          className="text-secondary mb-3"
+          style={{ fontStyle: 'italic' }}
+        >
+          sign in for more
+        </Card.Subtitle>
+        <Selector buckets={buckets}></Selector>
         <hr></hr>
         {image && captionControls}
         {image ? (

@@ -30,16 +30,26 @@ const postImage = async (bucket: string, image: File, caption: string) => {
   formData.append('caption', caption);
   formData.append('bucket', bucket);
 
-  await axios.post('/api/images', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `bearer ${token}`,
-    },
-  });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const headers: any = {
+    'Content-Type': 'multipart/form-data',
+  };
+
+  if (token) {
+    headers['Authorization'] = `bearer ${token}`;
+  }
+
+  await axios.post('/api/images', formData, headers);
 };
 
 const deleteImage = async (imageName: string) => {
-  console.log(token);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const headers: any = {};
+
+  if (token) {
+    headers['Authorization'] = `bearer ${token}`;
+  }
+
   await axios.delete(`/api/images/${imageName}`, {
     headers: {
       Authorization: `bearer ${token}`,
