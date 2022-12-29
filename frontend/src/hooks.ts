@@ -7,7 +7,9 @@ import arrayShuffle from 'array-shuffle';
 import { useErrorHandler } from 'react-error-boundary';
 import { AxiosError } from 'axios';
 
-export function useImage(interval: number): [Image | null, () => void] {
+export function useImage(
+  interval: number
+): [Image | null, boolean, () => void] {
   const [image, setImage] = useState<Image | null>(null);
   const { bucket } = useSelectedBucket();
 
@@ -28,13 +30,21 @@ export function useImage(interval: number): [Image | null, () => void] {
     setImage(images.dequeue());
   }, [bucket]);
 
-  useEffect(() => {
-    refreshImages();
-    const intervalId = setInterval(refreshImages, interval);
-    return () => clearInterval(intervalId);
-  }, [bucket, interval]);
+  const [imageSkipper, setImageSkipper] = useState(false);
 
-  return [image, refreshImages];
+  const skip = () => setImageSkipper(!imageSkipper);
+  const [imageLoading, setImageLoading] = useState<boolean>(false);
+
+  let intervalId: NodeJS.Timer;
+
+  useEffect(() => {
+    setImageLoading(true);
+    refreshImages().then(() => setTimeout(() => setImageLoading(false), 100));
+    intervalId = setInterval(refreshImages, interval);
+    return () => clearInterval(intervalId);
+  }, [bucket, interval, imageSkipper]);
+
+  return [image, imageLoading, skip];
 }
 
 export function useCustomErrorHandler() {

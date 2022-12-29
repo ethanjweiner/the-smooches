@@ -4,10 +4,12 @@
   "description": "A slideshow of my dogs.",
   "main": "index.js",
   "scripts": {
-    "dev": "./scripts/development/start.sh",
-    "build": "./scripts/development/build.sh",
-    "deploy": "./scripts/deployment/deploy.sh",
-    "production-test": "./scripts/production/test.sh"
+    "dev": "sh ./scripts/development/start.sh",
+    "dev-frontend": "sh ./scripts/development/start-frontend.sh",
+    "dev-backend": "sh ./scripts/development/start-backend.sh",
+    "build": "sh ./scripts/development/build.sh",
+    "deploy": "sh ./scripts/deployment/deploy.sh",
+    "stage": "sh ./scripts/production/stage.sh"
   },
   "repository": {
     "type": "git",

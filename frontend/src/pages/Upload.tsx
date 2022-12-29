@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Card, Form } from 'react-bootstrap';
+import { Button, ButtonGroup, Card, Form, Spinner } from 'react-bootstrap';
 import { useActiveUser } from '../store/user';
 import Selector from '../components/Selector';
 import ImageUploader from '../components/ImageUploader';
@@ -16,6 +16,7 @@ function Upload() {
 
   const [image, setImage] = useState<File | null>(null);
   const [caption, setCaption] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!user && selectedBucket != Bucket.community) {
@@ -43,10 +44,14 @@ function Upload() {
       throw new Error('no image selected');
     }
 
+    setLoading(true);
+
     try {
       await postImage(selectedBucket, image, caption);
     } catch (error) {
       handleError(error);
+    } finally {
+      setLoading(false);
     }
 
     reset();
@@ -54,10 +59,15 @@ function Upload() {
 
   const uploadControls = (
     <ButtonGroup size="lg">
-      <Button variant="success" onClick={uploadImage}>
+      <Button variant="success" disabled={loading} onClick={uploadImage}>
         Upload photo to "{capitalize(selectedBucket)}"
+        {loading && (
+          <Spinner animation="border" role="status" className="ms-2">
+            <span className="visually-hidden">Uploading...</span>
+          </Spinner>
+        )}
       </Button>
-      <Button variant="primary" onClick={reset}>
+      <Button variant="primary" disabled={loading} onClick={reset}>
         Cancel
       </Button>
     </ButtonGroup>

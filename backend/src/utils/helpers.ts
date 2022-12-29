@@ -12,12 +12,13 @@ export const getRandomImages = async (maxCount: number, bucket: string) => {
   const imageIndices: number[] = [];
 
   for (let index = 0; index < Math.min(maxCount, total); index++) {
-    const randIndex = Math.floor(Math.random() * total);
+    let randIndex = Math.floor(Math.random() * total);
 
-    if (imageIndices.includes(randIndex)) {
-      continue;
+    while (imageIndices.includes(randIndex)) {
+      randIndex = Math.floor(Math.random() * total);
     }
 
+    imageIndices.push(randIndex);
     imagePromises.push(ImageModel.findOne({ bucket }).skip(randIndex).then());
   }
 
