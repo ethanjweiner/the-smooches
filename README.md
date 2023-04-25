@@ -1,4 +1,4 @@
-# The Smooches
+# The Smooches 🐾
 
 [The Smooches](https://thesmooches.com/) is a minimal slideshow application of my two dogs (my family calls them the "smooches"). Uploads to the slideshows of my dogs require admin authentication, but there is a public slideshow to which any user can upload.
 
